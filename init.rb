@@ -1,6 +1,6 @@
-case Rails::VERSION::MAJOR
-
 STDOUT.sync = true
+
+case Rails::VERSION::MAJOR
 
 when 3 then
   logger = Logger.new(STDOUT)
