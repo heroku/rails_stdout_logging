@@ -1,5 +1,7 @@
 case Rails::VERSION::MAJOR
 
+STDOUT.sync = true
+
 when 3 then
   logger = Logger.new(STDOUT)
   logger.level = Logger::INFO
