@@ -4,7 +4,7 @@ case Rails::VERSION::MAJOR
 
 when 3 then
   logger = Logger.new(STDOUT)
-  logger.level =  ENV['LOG_LEVEL'] ? Logger.const_get(ENV['LOG_LEVEL']) : Logger::INFO
+  logger.level = Logger.const_get((%w[DEBUG INFO WARN ERROR FATAL UNKNOWN] & [ENV['LOG_LEVEL'].to_s.upcase, "INFO"]).compact.first)
   Rails.logger = Rails.application.config.logger = logger
 
 when 2 then
@@ -12,7 +12,7 @@ when 2 then
   def Rails.logger
     @@logger ||= begin
       logger = Logger.new(STDOUT)
-      logger.level =  ENV['LOG_LEVEL'] ? Logger.const_get(ENV['LOG_LEVEL']) : Logger::INFO
+      logger.level = Logger.const_get((%w[DEBUG INFO WARN ERROR FATAL UNKNOWN] & [ENV['LOG_LEVEL'].to_s.upcase, "INFO"]).compact.first)
       logger
     end
   end
