@@ -18,9 +18,8 @@ when 2 then
   end
 
   # borrowed from Rails::Initializer#initialize_framework_logging
-  ([ :active_record, :action_controller, :action_mailer ] & Rails.configuration.frameworks).each do |framework|
-    framework.to_s.camelize.constantize.const_get("Base").logger = Rails.logger
-  end
-  ActiveSupport::Dependencies.logger = Rails.logger
-  Rails.cache.logger = Rails.logger
+  [ActiveSupport::Dependencies, Rails.cache].concat(
+    ([:active_record, :action_controller, :action_mailer] & Rails.configuration.frameworks)\
+      .map { |framework| framework.to_s.camelize.constantize.const_get("Base") }
+  ).each { |k| k.logger = Rails.logger }
 end
