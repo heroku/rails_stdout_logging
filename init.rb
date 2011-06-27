@@ -28,4 +28,5 @@ case Rails::VERSION::MAJOR
       rescue
       end
     end
+    Rails.cache.logger = Rails.logger rescue nil
 end
