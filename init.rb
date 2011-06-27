@@ -13,9 +13,19 @@ case Rails::VERSION::MAJOR
     def Rails.logger
       @@logger ||= Rails.heroku_stdout_logger
     end
-    # borrowed from Rails::Initializer#initialize_framework_logging
-    [ActiveSupport::Dependencies, Rails.cache].concat(
-      ([:active_record, :action_controller, :action_mailer] & Rails.configuration.frameworks)\
-        .map { |framework| framework.to_s.camelize.constantize.const_get("Base") }
-    ).each { |k| k.logger = Rails.logger }
+    %w(
+      ActiveSupport::Dependencies
+      ActiveRecord::Base
+      ActionController::Base
+      ActionMailer::Base
+      ActionView::Base
+      ActiveResource::Base
+    ).each do |klass_name|
+      begin
+        klass = Object
+        klass_name.split("::").each { |part| klass = klass.const_get(part) }
+        klass.logger = Rails.logger
+      rescue
+      end
+    end
 end
