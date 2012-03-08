@@ -9,7 +9,7 @@ module RailsLogStdout
       classes.each do |klass_name|
         begin
           klass = constantize(klass_name)
-          klass.logger = Rails.logger
+          klass.logger = ::Rails.logger
         rescue NameError => exception
           puts "WARNING: #{exception.message}"
         end
@@ -17,7 +17,7 @@ module RailsLogStdout
     end
 
     def redefine_rails_logger!
-      class << Rails
+      class << ::Rails
         def memoized_heroku_logger
           @logger ||= self.heroku_stdout_logger
         end
