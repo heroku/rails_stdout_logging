@@ -38,7 +38,7 @@ This gem, `rails_serve_static_assets`, enables your Rails server to deliver your
 config.serve_static_assets = true
 ```
 
-Once you've got that set, now your application can take control of how your assets are served. All you need to do to get this functionality of both gems is add the `rails_on_heroku` gem to your project.
+You don't need to set this option since this that is what this gem does. Now your application can take control of how your assets are served. All you need to do to get this functionality of both gems is add the `rails_on_heroku` gem to your project.
 
 ## Why Didn't I need this before?
 
