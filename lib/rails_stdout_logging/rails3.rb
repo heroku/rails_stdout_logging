@@ -1,6 +1,6 @@
-require 'rails_log_stdout/rails'
+require 'rails_stdout_logging/rails'
 
-module RailsLogStdout
+module RailsStdoutLogging
   class Rails3 < Rails
     def self.set_logger(config)
       super()
