@@ -26,19 +26,9 @@ You also need the `rails_serve_static_assets` gem. You can get both of them toge
 
 ## Why is this needed?
 
-In the default Rails development environment assets are served through a middleware called [sprockets](https://github.com/sstephenson/sprockets). In production however most non-heroku Rails deployments will put their ruby server behind reverse HTTP proxy server such as Nginx which can load balance their sites and can serve static files directly. When Nginx sees a request for an asset such as `/assets/rails.png` it will grab it from disk at `/public/assets/rails.png` and serve it. The Rails server will never even sees the request.
+By default Rails writes its logs to a file which is convenient but only you only have one log file to tail. When you start scaling your app to multiple machines or dynos then finding a single request or failure across multiple files becomes much harder. Storing logs on disk can also take down a server if the hard drive fills up. Because of these limitations: every Rails core member we talked to uses a custom logger to replace Rail's default functionality. By using the `rails_stdout_logging` gem with Heroku, we set the logger for you.
 
-On Heroku, Nginx is not needed to run your application. Our [routing layer](https://devcenter.heroku.com/articles/http-routing) handles load balancing while you scale out horizontally. The caching behavior of Nginx is not needed if your application is serving static assets through an [edge caching CDN](https://en.wikipedia.org/wiki/Content_delivery_network).
-
-By default Rails4 will return a 404 if an asset is not handled via an external proxy such as Nginx. While this default behavior will help you debug your Nginx configuration, it makes a default Rails app with assets unusable on Heroku. To fix this we've released a gem `rails_serve_static_assets`.
-
-This gem, `rails_serve_static_assets`, enables your Rails server to deliver your assets instead of returning a 404. You can use this to populate an edge cache CDN, or serve files directly from your web app. This gives your app total control and allows you to do things like redirects, or setting headers in your Ruby code. To enable this behavior in your app we only need to set this one configuration option:
-
-```
-config.serve_static_assets = true
-```
-
-You don't need to set this option since this that is what this gem does. Now your application can take control of how your assets are served. All you need to do to get this functionality of both gems is add the `rails_on_heroku` gem to your project.
+The gem `rails_stdout_logging` ensures that your logs will be sent to standard out, from there Heroku sends them to [logplex](https://github.com/heroku/logplex) so you can access them from the command line, `$ heroku logs --tail`, or from enabled addons like [papertrail](https://addons.heroku.com/papertrail). By using Heroku's logplex, you can [treat logs as event streams](http://www.12factor.net/logs).
 
 ## Why Didn't I need this before?
 
