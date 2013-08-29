@@ -38,6 +38,18 @@ In the past Heroku has used plugins as a safe way to configure your application 
 
 It is important to note that unlike Gems, plugins do not have a dependency resolution phase like what happens when you run `bundle install`. Heroku does not and will not add anything to your Gemfile on compilation.
 
+## Tests
+
+Since we're playing with stdout we need to capture stdout. If you want to use the non captured version use `DEBUG_STDOUT` instead. The `puts` method should still behave as you expect.
+
+We're using appraisal to build multiple gemfiles for different versions of Rails.
+
+You can run all tests by running
+
+```
+$ bundle exec rake appraisal test
+```
+
 
 ## The Future
 
