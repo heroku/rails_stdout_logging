@@ -41,6 +41,23 @@ In the past Heroku has used plugins as a safe way to configure your application 
 
 It is important to note that unlike Gems, plugins do not have a dependency resolution phase like what happens when you run `bundle install`. Heroku does not and will not add anything to your Gemfile on compilation.
 
+
+## Set log level
+
+On Heroku you can set your log level by using the `LOG_LEVEL` environment variable
+
+```sh
+$ heroku config:set LOG_LEVEL=DEBUG
+```
+
+Valid values include `DEBUG`, `INFO`, `WARN`, `ERROR`, and `FATAL`. Alternatively you can set this value in your environment config:
+ 
+```
+config.log_level = :debug
+```
+
+If both are set `LOG_LEVEL` will take precedence. 
+
 ## Tests
 
 Since we're playing with stdout we need to capture stdout. If you want to use the non captured version use `DEBUG_STDOUT` instead. The `puts` method should still behave as you expect.
