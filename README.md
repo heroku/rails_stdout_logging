@@ -29,11 +29,11 @@ You also need the `rails_serve_static_assets` gem. You can get both of them toge
 
 ## Why is this needed?
 
-By default Rails writes its logs to a file which is convenient but only you only have one log file to tail. When you start scaling your app to multiple machines or dynos then finding a single request or failure across multiple files becomes much harder. Storing logs on disk can also take down a server if the hard drive fills up. Because of these limitations: every Rails core member we talked to uses a custom logger to replace Rail's default functionality. By using the `rails_stdout_logging` gem with Heroku, we set the logger for you.
+By default Rails writes its logs to a file, which is convenient because you only have one log file to tail. When you start scaling your app to multiple machines or dynos, it becomes much harder to find a single request or failure as they're spread across multiple files. Storing logs on disk can also take down a server if the hard drive fills up. Because of these limitations, every Rails core member we talked to uses a custom logger to replace Rails' default functionality. By using the `rails_stdout_logging` gem with Heroku, we set the logger for you.
 
-The gem `rails_stdout_logging` ensures that your logs will be sent to standard out, from there Heroku sends them to [logplex](https://github.com/heroku/logplex) so you can access them from the command line, `$ heroku logs --tail`, or from enabled addons like [papertrail](https://addons.heroku.com/papertrail). By using Heroku's logplex, you can [treat logs as event streams](http://www.12factor.net/logs).
+The gem `rails_stdout_logging` ensures that your logs will be sent to standard out. From there, Heroku sends them to [logplex](https://github.com/heroku/logplex) so you can access them from the command line like `$ heroku logs --tail`, or from enabled addons like [papertrail](https://addons.heroku.com/papertrail). By using Heroku's logplex, you can [treat logs as event streams](http://www.12factor.net/logs).
 
-## Why Didn't I need this before?
+## Why didn't I need this before?
 
 Why do you need to include this gem in Rails 4 and not Rails 3? Rails4 is getting rid of the concept of plugins. Before libraries were easily distributed as Gems and in the form of Engines, Rails had a folder `vendor/plugins`. Any code you put there would be initialized much like a Gem is today. This was a very simple and easy way to share and use libraries, but it wasn't very maintainable. You could use a library, and make a change locally and then deploy which makes your version incompatible from future versions. Even worse there was no concept of versioning aside from source control, so semantic versioning was out of the question. For these reasons and more Rails3 deprecated plugins. With Rails4 plugins have been removed completely. Why does this affect your app on Heroku?
 
