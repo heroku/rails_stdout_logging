@@ -25,7 +25,8 @@ Then run
 $ bundle install`
 ```
 
-You also need the `rails_serve_static_assets` gem. You can get both of them together by installing `rails_on_heroku` gem.
+You also need the [`rails_serve_static_assets` gem](https://github.com/heroku/rails_serve_static_assets).
+You can get both of them together by installing the [`rails_12factor` gem](https://github.com/heroku/rails_12factor).
 
 ## Why is this needed?
 
