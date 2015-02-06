@@ -22,7 +22,7 @@ gem 'rails_stdout_logging'
 Then run
 
 ```
-$ bundle install`
+$ bundle install
 ```
 
 You also need the [`rails_serve_static_assets` gem](https://github.com/heroku/rails_serve_static_assets).
