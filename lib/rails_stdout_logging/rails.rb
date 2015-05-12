@@ -1,9 +1,13 @@
 module RailsStdoutLogging
+  class StdoutLogger < ::Logger
+    include ::LoggerSilence if defined?(::LoggerSilence)
+  end
+
   class Rails
     def self.heroku_stdout_logger
-      logger       = Logger.new(STDOUT)
+      logger       = StdoutLogger.new(STDOUT)
       logger       = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
-      logger.level = Logger.const_get(log_level)
+      logger.level = StdoutLogger.const_get(log_level)
       logger
     end
 
