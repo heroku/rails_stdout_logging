@@ -14,5 +14,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "rails_stdout_logging"
   gem.require_paths = ["lib"]
+  gem.add_development_dependency "test-unit", "~> 3"
   gem.version       = RailsStdoutLogging::VERSION
 end
