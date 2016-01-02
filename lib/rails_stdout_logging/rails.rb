@@ -1,5 +1,5 @@
 module RailsStdoutLogging
-  class StdoutLogger < ::Logger
+  class StdoutLogger < ActiveSupport::Logger # Force using ActiveSupport module as hotfix for NameError: undefined local variable or method `broadcast_messages'
     include ::LoggerSilence if defined?(::LoggerSilence)
   end
 
