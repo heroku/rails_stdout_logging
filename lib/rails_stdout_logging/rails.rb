@@ -1,6 +1,7 @@
 module RailsStdoutLogging
   class StdoutLogger < ::Logger
     include ::LoggerSilence if defined?(::LoggerSilence)
+    attr_reader :level
   end
 
   class Rails
