@@ -1,6 +1,16 @@
 module RailsStdoutLogging
   class StdoutLogger < ::Logger
     include ::LoggerSilence if defined?(::LoggerSilence)
+
+    def initialize(*args)
+      super
+      after_initialize if respond_to? :after_initialize
+    end
+
+    def add(severity, message = nil, progname = nil, &block)
+      return true if @logdev.nil? || (severity || ::Logger::UNKNOWN) < level
+      super
+    end
   end
 
   class Rails
