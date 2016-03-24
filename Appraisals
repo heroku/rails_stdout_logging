@@ -12,12 +12,15 @@ end
 
 appraise "rails-4.0.x" do
   gem "rails", "~> 4.0.0"
+  gem "mime-types", "< 3.0", platform: [:mri_19]
 end
 
 appraise "rails-4.1.x" do
   gem "rails", "~> 4.1.0"
+  gem "mime-types", "< 3.0", platform: [:mri_19]
 end
 
 appraise "rails-4.2.x" do
   gem "rails", "~> 4.2.0"
+  gem "mime-types", "< 3.0", platform: [:mri_19]
 end
