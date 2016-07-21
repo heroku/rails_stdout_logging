@@ -1,8 +1,18 @@
+require 'fileutils'
+
 # Configure Rails Envinronment
 ENV["RAILS_ENV"] = "test"
 
 DEBUG_STDOUT = STDOUT
 STDOUT = StringIO.new
+
+DEBUG_STDERR = STDERR
+STDERR = StringIO.new
+
+# triggers an error message if default logger loads and cannot write log file
+logdir = File.join(File.dirname(__FILE__), 'dummy', 'log')
+FileUtils.mkdir_p logdir
+FileUtils.chmod 'ugo-wx', logdir
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
