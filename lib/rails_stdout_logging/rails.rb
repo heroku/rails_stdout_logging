@@ -6,9 +6,15 @@ module RailsStdoutLogging
   class Rails
     def self.heroku_stdout_logger
       logger       = StdoutLogger.new(STDOUT)
+      logger.formatter = log_formatter if log_formatter
       logger       = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
       logger.level = StdoutLogger.const_get(log_level)
       logger
+    end
+
+    def self.log_formatter
+      config = ::Rails.application.config
+      config.respond_to?(:log_formatter) ? config.log_formatter : config.try(:logger).try(:formatter)
     end
 
     def self.log_level

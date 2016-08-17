@@ -41,5 +41,13 @@ module Dummy
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    require 'custom_log_formatter'
+    if defined?(config.log_formatter)
+        config.log_formatter = CustomLogFormatter.new
+    else
+        config.logger = ::Logger.new(STDOUT)
+        config.logger.formatter = CustomLogFormatter.new
+    end
   end
 end
