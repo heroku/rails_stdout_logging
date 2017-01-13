@@ -72,8 +72,30 @@ $ bundle exec rake appraisal test
 ```
 
 
-## The Future
+## Rails 5
 
-We will be working with Rails and the Rails core team to make future versions of Rails work on Heroku out of the box. Until then you'll need to add this gem to your project.
+We worked with the Rails core team to make Rails 5 work on twelve-factor platforms out of the box.
 
+### New Rails 5 Apps
 
+If you are starting a new application with Rails 5, **you do not need this gem.**
+
+### Migrating to Rails 5
+
+You can remove this gem after making sure the following sections are added in
+your `production.rb` file:
+
+**`config/environments/production.rb`**
+```ruby
+# Disable serving static files from the `/public` folder by default since
+# Apache or NGINX already handles this.
+config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+if ENV["RAILS_LOG_TO_STDOUT"].present?
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger = ActiveSupport::TaggedLogging.new(logger)
+end
+```
+
+Make sure to add both the `RAILS_SERVE_STATIC_FILES` and `RAILS_LOG_TO_STDOUT` ENV vars and set them to `true`. (This is done for you on Heroku)
