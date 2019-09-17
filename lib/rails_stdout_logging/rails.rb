@@ -1,6 +1,7 @@
 module RailsStdoutLogging
   class StdoutLogger < defined?(::ActiveSupport::Logger) ? ::ActiveSupport::Logger : ::Logger
-    include ::LoggerSilence if defined?(::LoggerSilence)
+    silencer = %w[ActiveSupport::LoggerSilence LoggerSilence].find { |const| Object.const_defined?(const, false) }
+    include Object.const_get(silencer, false) if silencer
   end
 
   class Rails

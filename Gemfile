@@ -8,6 +8,3 @@ gem 'appraisal'
 gem 'rake'
 gem "capybara"
 gem "launchy"
-
-gem "sqlite3",                          :platform => [:ruby, :mswin, :mingw]
-gem "activerecord-jdbcsqlite3-adapter", '>= 1.3.0.beta', :platform => :jruby
